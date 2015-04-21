@@ -1,0 +1,8 @@
+{
+	"question": {
+		"text": "What is your age?",
+		"type": "number",
+		"required": true,
+		"min": 13
+	}
+}

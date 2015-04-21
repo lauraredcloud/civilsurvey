@@ -1,0 +1,20 @@
+{
+	"question": {
+		"text": "In what country do you reside?",
+		"type": "select",
+		"options": [
+			{
+				"label": "USA",
+				"value": "usa"
+			},
+			{
+				"label": "Canada",
+				"value": "canada"
+			},
+			{
+				"label": "Other",
+				"value": "other"
+			}
+		]
+	}
+}

@@ -1,0 +1,36 @@
+<div ng-controller="surveyCtrl">
+
+	<h2>{{ survey.title }}</h2>
+
+	<div class="surveybody">
+		
+		<div class="instructions" ng-bind-html="survey.instructions"></div>
+		
+		<div class="slide_container" ng-repeat="page in survey.pages">
+		
+			<form role="form" name="surveyForm" novalidate>
+
+				<div class="slide" ng-view ng-if="pageIndex == $index">
+			
+						<question></question>
+					
+					<button class="submit" ng-if="!$last" ng-click="nextPage(surveyForm.$valid)">Next page >></button>
+				
+				</div>
+				
+			</form>
+				
+		</div>
+		
+		<div ng-show="surveyFinished">
+			Here's what you said:
+			<pre>
+				{{ surveyValues }}
+			</pre>
+		</div>
+			
+		<div class='footer' ng-bind-html="survey.footer"></div>
+				
+	</div>
+	
+</div>

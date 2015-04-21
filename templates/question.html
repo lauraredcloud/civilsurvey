@@ -1,0 +1,99 @@
+<div ng-repeat="questionName in page.questions" ng-controller="questionCtrl">
+
+	<div class='status error' ng-show="questionError">
+		{{ questionError }}
+	</div>
+
+	<div ng-init="loadQuestion(questionName)">
+		<fieldset class="question form-group" ng-if="questionData">
+
+			<div class="questionText" ng-bind-html="questionData.text"></div>
+
+			<!-- Input Type Text -->
+			<input 
+				type="{{ questionData.type }}" 
+				ng-if="input_types.indexOf(questionData.type) != -1" 
+				ng-model="surveyValues[questionName]" 
+				ng-required="questionData.required"
+				min="{{ questionData.min }}"
+				max="{{ questionData.max }}"
+				name="{{ questionName }}" 
+				id="{{ questionName }}" 
+				class="form-control" >
+			</input>
+			
+			<!-- Textarea -->
+			<textarea
+				ng-if="questionData.type == 'textarea'" 
+				ng-model="surveyValues[questionName]" 
+				ng-required="questionData.required"
+				name="{{ questionName }}" 
+				id="{{ questionName }}" 
+				class="form-control" >			
+			</textarea>
+			
+			<!-- Select -->
+			<select
+				ng-if="questionData.type == 'select' && questionData.options"
+				ng-model="surveyValues[questionName]"
+				ng-required="questionData.required"
+				name="{{ questionName }}"
+				id="{{ questionName }}"
+				class="form-control">
+				<option
+					ng-if="questionData.type == 'select' && questionData.options"
+					ng-repeat="option in questionData.options"
+					value="{{ option.value }}">
+						{{ option.label }}
+				</option>
+			</select>
+			
+			<!-- Radio -->
+			<div
+				ng-if="questionData.type == 'radio' && questionData.options">
+				<div ng-repeat="option in questionData.options">
+					<label for="{{ questionName }}_{{ option.value }}"
+						class="radio-inline">
+						<input
+							type="radio"
+							ng-model="surveyValues[questionName]"
+							ng-required="questionData.required"
+							name="{{ questionName }}"
+							id="{{ questionName }}_{{ option.value }}"
+							value="{{ option.value }}">
+						</input>
+						{{ option.label }}
+					</label>
+				</div>
+			</div>
+			
+			<!-- Baked-in Validation -->
+			<span class="help-block error" 
+				ng-show="submittedPage && surveyForm[questionName].$error.required">
+				Required.
+			</span>
+			<span class="help-block error" 
+				ng-show="submittedPage && surveyForm[questionName].$error.number">
+				Invalid number.
+			</span>
+			<span class="help-block error" 
+				ng-show="submittedPage && surveyForm[questionName].$error.min">
+				The minimum value is {{ questionData.min }}.
+			</span>
+			<span class="help-block error" 
+				ng-show="submittedPage && surveyForm[questionName].$error.max">
+				The maximum value is {{ questionData.max }}.
+			</span>
+			<span class="help-block error" 
+				ng-show="submittedPage && surveyForm[questionName].$error.email">
+				Invalid email.
+			</span>
+			<span class="help-block error" 
+				ng-show="submittedPage && surveyForm[questionName].$error.url">
+				Invalid URL.
+			</span>
+
+		</fieldset>
+	</div>
+
+</div>

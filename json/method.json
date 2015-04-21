@@ -1,0 +1,32 @@
+{
+	"question": {
+		"text": "What is your primary method of transportation?",
+		"type": "radio",
+		"options": [
+			{
+				"label": "Car/Truck (Personal Vehicle)",
+				"value": "car"
+			},
+			{
+				"label": "Bus",
+				"value": "bus"
+			},
+			{
+				"label": "Subway/Light Rail",
+				"value": "subway"
+			},
+			{
+				"label": "Bike",
+				"value": "bike"
+			},
+			{
+				"label": "Foot (Walking, Running)",
+				"value": "foot"
+			},
+			{
+				"label": "Other",
+				"value": "other"
+			}
+		]
+	}
+}
