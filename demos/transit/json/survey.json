@@ -1,0 +1,34 @@
+{
+	"survey": {
+		"title": "Demo Transit Survey",
+		"instructions": "This is a demo transit survey.",
+		"footer": "Copyright (c) Laura Hughes",
+		"pages": [
+			{
+				"name": "demog",
+				"questions": [
+					"json/age.json", 
+					"json/country.json"
+				]
+			},
+			{
+				"name": "method",
+				"questions": [
+					"json/method.json"
+				]
+			},
+			{
+				"name": "anythingElse",
+				"questions": [
+					"json/anythingElse.json"
+				]
+			},
+			{
+				"name": "thankYou",
+				"questions": [
+					"json/thankYou.json"
+				]
+			}
+		]
+	}
+}

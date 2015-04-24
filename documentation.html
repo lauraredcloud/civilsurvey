@@ -15,7 +15,7 @@
 	<div id="bodytext">
 		<p>CivilSurvey is an open source, lightweight survey engine built with Angular.js, driven by a JSON API. Copyright (C) Laura Hughes, 2015.</p>
 		
-		<p><a href="http://www.laurahughes.com/apps/civilsurvey/">View the demo.</a>
+		<p><a href="http://www.laurahughes.com/apps/civilsurvey/">View the demos.</a>
 
 		<h2>License</h2>
 		<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
@@ -24,9 +24,36 @@
 
 		<h2>Installation</h2>
 		<ol>
-			<li>Copy all of the files onto your webspace.</li>
+			<li>Create a local copy of the key JS file, civilsurvey.js
+			
+			<li>Create Survey API files. See "The CivilSurvey API" below for details. 
+			
+			<li>Create an HTML page which calls the civilsurvey.js file and all the support files, as shown: 
+			
+			<pre>
+			<!DOCTYPE html>
+			<html lang="en-US">
 
-			<li>Build your survey. Update the "/json/survey.json" file with your own survey metadata. The rest of the .json files are survey questions; you can remove them and build your own. See "The CivilSurvey API" below for details.</li>
+			<head>
+				<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+				<link rel="stylesheet" type="text/css" href="/css/civilsurvey.css">
+				<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular-sanitize.min.js"></script>
+				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular-animate.min.js"></script>
+				<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+				<script type="text/javascript" src="/js/civilsurvey.js"></script>
+			</head>
+
+			<body ng-app="civilSurvey">	
+	
+				<survey data-src="/path/to/survey.json"></survey>
+				
+			</body>
+	
+			</html>
+			</pre>
+			
+			<p>You can put any additional styling and HTML you want on the page. Replace /path/to/survey.json with the path to your own survey metadata file, and make sure that the survey metadata file correctly contains the paths to all your question files.
 
 			<li>Figure out some way to store the values. Currently, as this is just a frontend demo, I simply display the raw values at the end of the survey, but on my to-do list is adding some quick way of dumping them into a database.</li>
 		</ol>
@@ -37,33 +64,40 @@
 		<h3>Survey Metadata File</h3>
 
 		<ul>
-			<li><h4>title</h4> Text. Optional. The survey's title. Appears on the top of the page.</li>
-			<li><h4>instructions</h4> Text/HTML. Optional. Text to appear on the top of the page.</li>
-			<li><h4>footer</h4> Text/HTML. Optional. Text to appear on the bottom of the page.</li>
-			<li><h4>pages</h4> Array of JSON objects. Each object in this array is a survey page. A survey page is simply a set of questions that are shown at once, with a submit button. Page object parameters:
+			<li><strong>title</strong> Text. Optional. The survey's title. Appears on the top of the page.</li>
+			<li><strong>instructions</strong> Text/HTML. Optional. Text to appear on the top of the page.</li>
+			<li><strong>footer</strong> Text/HTML. Optional. Text to appear on the bottom of the page.</li>
+			<li><strong>pages</strong> Array of JSON objects. Each object in this array is a survey page. A survey page is simply a set of questions that are shown at once, with a submit button. Page object parameters:
 				<ul>
-					<li><h5>questions</h5> Array of text strings. Each string is the name of a question that should appear on this page.
+					<li><strong>questions</strong> Array of text strings. Each string is the name of a question that should appear on this page.
 				</ul>
 			</li>
 		</ul>
 
 		<h3>Question Metadata File</h3>
-		Each question file should have the same name as the question it constains. In other words, if you have a question called "age", that question's metadata should be in a file called age.json. The string "age" would appear in the survey metadata file on the page where you want the question to appear. And the "name" attribute of the question should also be "age".
+		Each question file should have the same name as the question it constains. In other words, if you have a question called "age", that question's metadata should be in a file called age.json. The string "age" would appear in the survey metadata file, in the <strong>questions</strong> array for the page where you want the question to appear.
 
 		<ul>
-			<li><h4>text</h4> String or HTML. The text of the question that is shown to the user. For example, "What is your age?"</li>
-			<li><h4>type</h4> String. The question type; what kind of input the user can provide. Possible values:
+			<li><strong>text</strong> Text or HTML. The text of the question that is shown to the user. For example, "What is your age?"</li>
+			<li><strong>type</strong> Text. The question type; what kind of input the user can provide. Possible values:
 				<ul>
-					<li><h5>text</h5></li>
-					<li><h5>number</h5></li>
-					<li><h5>email</h5></li>
-					<li><h5>url</h5></li>
-					<li><h5>textarea</h5></li>
-					<li><h5>select</h5></li>
-					<li><h5>noInput</h5> A "question" with no option for user input; just text/HTML. Useful for "thank you" elements, providing mid-survey instructions, showing creatives, and so forth.</li>
+					<li><strong>text</strong> Open text.</li>
+					<li><strong>number</strong> Open text; numeric validation.</li>
+					<li><strong>email</strong> Open text; email validation.</li>
+					<li><strong>url</strong> Open text; URL validation.</li>
+					<li><strong>textarea</strong> Open text; large area.</li>
+					<li><strong>select</strong> Dropdown menu; user chooses one option.</li>
+					<li><strong>radio</strong> Radio buttons; user chooses one option.</li>
+					<li><strong>checkbox</strong> Checkboxes; user chooses multiple options.</li>
+					<li><strong>noInput</strong> No user input; just displays <strong>text</strong> (question text/HTML). Useful for "thank you" elements, providing mid-survey instructions, showing creatives, and so forth.</li>
 				</ul> 
 			</li>
-			<li><h4>required</h4> Boolean. Optional. Default = false. If true, prevents submission when the user has not filled in an answer.</li>
+			<li><strong>required</strong> Boolean. Optional. Default = false. If true, prevents submission when the user has not filled in an answer.</li>
+			<li><strong>options</strong> Array of objects. Required for question types with options (select, radio, checkbox). Each element of the array is a possible option for the user to choose from. Option objects consist of:
+				<ul>
+					<li><strong>label</strong> Text. HTML is acceptable, except for SELECT questions. The option text to be shown to the user.
+					<li><strong>value</strong> Text string or number. NO HTML. The value to be saved in the backend (useful for numeric id's, or text slugs that are simpler than the label text).
+				</ul>
 		</ul>
 	</div>
 </body>

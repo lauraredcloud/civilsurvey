@@ -14,12 +14,16 @@
 			
 						<question></question>
 					
-					<button class="submit" ng-if="!$last" ng-click="nextPage(surveyForm.$valid)">Next page >></button>
+					<button class="submit" type="submit" ng-if="!$last" ng-click="nextPage(surveyForm.$valid)">Next page >></button>
 				
 				</div>
 				
 			</form>
 				
+		</div>
+		
+		<div class="status error" ng-show="surveyError">
+			{{ surveyError }}
 		</div>
 		
 		<div ng-show="surveyFinished">

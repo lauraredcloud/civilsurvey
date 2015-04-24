@@ -62,11 +62,29 @@
 							id="{{ questionName }}_{{ option.value }}"
 							value="{{ option.value }}">
 						</input>
-						{{ option.label }}
+						<span class='option' ng-bind-html="option.label"></span>
 					</label>
 				</div>
 			</div>
 			
+			<!-- Checkbox -->
+			<div
+				ng-if="questionData.type == 'checkbox' && questionData.options">
+				<div ng-repeat="option in questionData.options">
+					<label for="{{ questionName }}_{{ option.value }}"
+						class="checkbox-inline">
+						<input
+							type="checkbox"
+							ng-model="surveyValues[questionName][option.value]"
+							ng-required="questionData.required"
+							name="{{ questionName }}[]"
+							id="{{ questionName }}_{{ option.value }}">
+						</input>
+						<span class='option' ng-bind-html="option.label"></span>
+					</label>
+				</div>
+			</div>			
+						
 			<!-- Baked-in Validation -->
 			<span class="help-block error" 
 				ng-show="submittedPage && surveyForm[questionName].$error.required">
