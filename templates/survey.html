@@ -10,7 +10,7 @@
 		
 			<form role="form" name="surveyForm" novalidate>
 
-				<div class="slide" ng-view ng-if="pageIndex == $index">
+				<div class="page slide" ng-view ng-if="pageIndex == $index">
 			
 						<question></question>
 					
@@ -28,9 +28,24 @@
 		
 		<div ng-show="surveyFinished">
 			Here's what you said:
-			<pre>
-				{{ surveyValues }}
-			</pre>
+			
+			<div id="results">
+				<div class="result"
+					ng-repeat="(key, value) in surveyValues">
+					<label class="key">{{ key }}</label>
+					<span class="value"
+						ng-if="!isObject(value)">
+						{{ value }}
+					</span>
+					<ul ng-if="isObject(value)">
+						<li class="value"
+							ng-repeat="(subkey, subvalue) in value"
+							ng-if="subkey != 'numChecks'">
+							{{ subkey }}
+						</li>
+					</ul>
+				</div>
+			</div>
 		</div>
 			
 		<div class='footer' ng-bind-html="survey.footer"></div>

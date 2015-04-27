@@ -2,26 +2,39 @@
 <html lang="en-US">
 
 	<head>
-		<title>CivilSurvey Documentation</title>
+		<title>CivilSurvey</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
 		<link rel="stylesheet" type="text/css" href="/css/style.css" />
-		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="css/civilsurvey.css" />
 	</head>
 
 	<body>	
-		<h1>CivilSurvey Documentation</h1>
+	
+	<div id="lynx">
+		<a class=lynx href="http://www.laurahughes.com/">main</a>
+	</div>
+	
+	<h1>CivilSurvey Documentation</h1>
 
 	<div id="bodytext">
 		<p>CivilSurvey is an open source, lightweight survey engine built with Angular.js, driven by a JSON API. Copyright (C) Laura Hughes, 2015.</p>
 		
-		<p><a href="http://www.laurahughes.com/apps/civilsurvey/">View the demos.</a>
-
+		<p><a href="index.html">View the demos.</a>
+		
+		<h2>Documentation Contents</h2>
+		<a href="#license">License</a>
+		<br><a href="#installation">Installation</a>
+		<br><a href="#api">The CivilSurvey API</a>
+		
+		<a name="license"></a>
 		<h2>License</h2>
 		<p>This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
 
 		<p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the <a href="https://www.gnu.org/licenses/gpl-2.0.html">GNU General Public License</a> for more details.</p>
 
+		<a name="installation"></a>
 		<h2>Installation</h2>
 		<ol>
 			<li>Create a local copy of the key JS file, civilsurvey.js
@@ -31,26 +44,26 @@
 			<li>Create an HTML page which calls the civilsurvey.js file and all the support files, as shown: 
 			
 			<pre>
-			<!DOCTYPE html>
-			<html lang="en-US">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en-US"&gt;
 
-			<head>
-				<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-				<link rel="stylesheet" type="text/css" href="/css/civilsurvey.css">
-				<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
-				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular-sanitize.min.js"></script>
-				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular-animate.min.js"></script>
-				<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-				<script type="text/javascript" src="/js/civilsurvey.js"></script>
-			</head>
+&lt;head&gt;
+	&lt;link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" /&gt;
+	&lt;link rel="stylesheet" type="text/css" href="/css/civilsurvey.css" /&gt;
+	&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js" /&gt;
+	&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular-sanitize.min.js" /&gt;
+	&lt;script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular-animate.min.js" /&gt;
+	&lt;script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" /&gt;
+	&lt;script type="text/javascript" src="/js/civilsurvey.js" /&gt;
+&lt;/head&gt;
 
-			<body ng-app="civilSurvey">	
+&lt;body ng-app="civilSurvey"&gt;
+
+	&lt;survey data-src="/path/to/survey.json"&gt;&lt;/survey&gt;
 	
-				<survey data-src="/path/to/survey.json"></survey>
-				
-			</body>
-	
-			</html>
+&lt;/body&gt;
+
+&lt;/html&gt;
 			</pre>
 			
 			<p>You can put any additional styling and HTML you want on the page. Replace /path/to/survey.json with the path to your own survey metadata file, and make sure that the survey metadata file correctly contains the paths to all your question files.
@@ -58,47 +71,201 @@
 			<li>Figure out some way to store the values. Currently, as this is just a frontend demo, I simply display the raw values at the end of the survey, but on my to-do list is adding some quick way of dumping them into a database.</li>
 		</ol>
 
+		<a name="api"></a>
 		<h2>The CivilSurvey API</h2>
-		<p>CivilSurvey data consists of two types: the survey metadata, and the question metadata. Each survey has only one survey metadata file, and one question metadata file for each question.</p>
+		<p>CivilSurvey data consists of two types of JSON file: the survey metadata, and the question metadata. Each survey has only one survey metadata file, and one question metadata file for each question.</p>
 
 		<h3>Survey Metadata File</h3>
-
-		<ul>
-			<li><strong>title</strong> Text. Optional. The survey's title. Appears on the top of the page.</li>
-			<li><strong>instructions</strong> Text/HTML. Optional. Text to appear on the top of the page.</li>
-			<li><strong>footer</strong> Text/HTML. Optional. Text to appear on the bottom of the page.</li>
-			<li><strong>pages</strong> Array of JSON objects. Each object in this array is a survey page. A survey page is simply a set of questions that are shown at once, with a submit button. Page object parameters:
-				<ul>
-					<li><strong>questions</strong> Array of text strings. Each string is the name of a question that should appear on this page.
-				</ul>
-			</li>
-		</ul>
+		Each survey consists of a single survey metadata file. The survey metadata file is a JSON file containing a <b>survey</b> object: { "survey": { ... } }
+		
+		<h4><b>survey</b> Object Attributes</h4>
+		<table class='table'>
+			<thead>
+				<tr>
+					<th>Attribute Name</th>
+					<th>Default</th>
+					<th>Value Datatype</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>title</th>
+					<td></td>
+					<td>Text</td>
+					<td>The survey's title. Appears on the top of the page.</td>
+				</tr>
+				<tr>
+					<th>instructions</th>
+					<td></td>
+					<td>Text/HTML</td>
+					<td>Explanatory text for the user, also to appear on the top of the page.</td>
+				</tr>
+				<tr>
+					<th>footer</th>
+					<td></td>
+					<td>Text/HTML</td>
+					<td>Text to appear on the bottom of the page.</td>
+				</tr>
+				<tr>
+					<th>pages</th>
+					<td></td>
+					<td>Array of objects (pages)</td>
+					<td>Each object in this array is a survey page. A survey page is simply a set of questions that are shown at once, with a submit button.</td>
+				</tr>								
+			</tbody>
+		</table>
+		
+		<h4><b>pages</b> Object Attributes</h4>
+		<table class='table'>
+			<thead>
+				<tr>
+					<th>Attribute Name</th>
+					<th>Required?</th>
+					<th>Value Datatype</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>questions</th>
+					<td></td>
+					<td>Array of text strings (question JSON file paths)</td>
+					<td>Each string is the file path of the JSON API that represents a question. Include the file paths of all questions that should appear on this page.</td>
+				</tr>
+			</tbody>
+		</table>
 
 		<h3>Question Metadata File</h3>
-		Each question file should have the same name as the question it constains. In other words, if you have a question called "age", that question's metadata should be in a file called age.json. The string "age" would appear in the survey metadata file, in the <strong>questions</strong> array for the page where you want the question to appear.
+		Each question in the survey gets its own question metadata file, since a question is the most complex data unit of survey information. A question metadata file is a JSON file containing a <b>question</b> object: { "question": { ... } }
+		
+		<h4><b>question</b> Object Attributes</h4>	
+		<table class='table'>
+			<thead>
+				<tr>
+					<th>Attribute Name</th>
+					<th>Required?</th>
+					<th>Value Datatype</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>name</th>
+					<td>Required</td>
+					<td>Text</td>
+					<td>A brief text nickname for the question. This is not shown to the user; it's used to organize the results and associate the user's response to a question. For example, if you were to dump the results into a database, this could be a column name.</td>
+				</tr>
+				<tr>
+					<th>text</th>
+					<td></td>
+					<td>Text/HTML</td>
+					<td>The text of the question that is shown to the user. For example, "What is your age?"</td>
+				</tr>
+				<tr>
+					<th>type</th>
+					<td>Required</td>
+					<td>Text (choose from possible values)</td>
+					<td>The question type; what kind of input the user can provide. Possible values:
+						<ul>
+							<li><strong>text</strong> Open text.</li>
+							<li><strong>number</strong> Open text; numeric validation.</li>
+							<li><strong>email</strong> Open text; email validation.</li>
+							<li><strong>url</strong> Open text; URL validation.</li>
+							<li><strong>textarea</strong> Open text; large area.</li>
+							<li><strong>select</strong> Dropdown menu; user chooses one option.</li>
+							<li><strong>radio</strong> Radio buttons; user chooses one option.</li>
+							<li><strong>checkbox</strong> Checkboxes; user chooses multiple options.</li>
+							<li><strong>noInput</strong> No user input; just displays <strong>text</strong> (question text/HTML). Useful for "thank you" elements, providing mid-survey instructions, showing creatives, and so forth.</li>
+						</ul> 
+					</td>
+				</tr>
+				<tr>
+					<th>required</th>
+					<td></td>
+					<td>Boolean (default false)</td>
+					<td>If true, prevents submission when the user has not filled in an answer.</td>
+				</tr>
+				<tr>
+					<th>min</th>
+					<td></td>
+					<td>Number</td>
+					<td>For <strong>number</strong> question type: specifies a minimum numeric value. 
+					<br>For <strong>checkbox</strong> question type: specifies a minimum number of boxes to be checked.</td>
+				</tr>
+				<tr>
+					<th>max</th>
+					<td></td>
+					<td>Number</td>
+					<td>For <strong>number</strong> question type: specifies a maximum numeric value. 
+					<br>For <strong>checkbox</strong> question type: specifies a maximum number of boxes to be checked.</td>
+				</tr>
+				<tr>
+					<th>options</th>
+					<td>Required for question types with options (select, radio, checkbox)</td>
+					<td>Array of objects (options)</td>
+					<td>Each element of the array is a possible option for the user to choose from.</td>
+				</tr>	
+				<tr>
+					<th>shuffle</th>
+					<td></td>
+					<td>Boolean (default false)</td>
+					<td>Only relevant for questions with <strong>options</strong>. Randomizes the order in which the multiple choice options appear.</td>
+				</tr>			
+			</tbody>
+		</table>
+		
+		
+		<h4><b>options</b> Object Attributes</h4>	
+		<table class='table'>
+			<thead>
+				<tr>
+					<th>Attribute Name</th>
+					<th>Required?</th>
+					<th>Value Datatype</th>
+					<th>Notes</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>label</th>
+					<td>Required</td>
+					<td>Text/HTML (text only for question type select)</td>
+					<td>The option text to be shown to the user.</td>
+				</tr>	
+				<tr>
+					<th>value</th>
+					<td>Required</td>
+					<td>Text or number (No HTML)</td>
+					<td>The value to be saved in the results. Not shown to the user.</td>
+				</tr>
+				<tr>
+					<th>detail</th>
+					<td></td>
+					<td>Boolean (default false)</td>
+					<td>If true, adds a text box alongside the option for additional detail. For example, an "Other" option where you want the survey taker to explain what "Other" means to them.</td>
+				</tr>
+				<tr>
+					<th>detail_required</th>
+					<td></td>
+					<td>Boolean (default false)</td>
+					<td>Only relevant if <strong>detail</strong> = true. Makes the detail box required if the user selects this option (the "Other" radio button that this detail box is attached to).</td>
+				</tr>	
+				<tr>
+					<th>detail_label</th>
+					<td></td>
+					<td>Text/HTML</td>
+					<td>Only relevant if <strong>detail</strong> = true. An optional label for the detail textbox; for example, "Please specify." This is a &lt;label&gt; element with the class "detail_label"</td>
+				</tr>	
+				<tr>
+					<th>shuffle_exempt</th>
+					<td></td>
+					<td>Boolean (default false)</td>
+					<td>Only relevant if <strong>shuffle</strong> = true for this question. Exempt this option from shuffle; it will always appear at the end of the multiple choice list. If multiple options have shuffle_exempt set, they will all appear at the end of the list in their original order. This is useful for options such as "All of the above," "None of the above," "Other", etc.</td>
+				</tr>			
+			</tbody>
+		</table>
 
-		<ul>
-			<li><strong>text</strong> Text or HTML. The text of the question that is shown to the user. For example, "What is your age?"</li>
-			<li><strong>type</strong> Text. The question type; what kind of input the user can provide. Possible values:
-				<ul>
-					<li><strong>text</strong> Open text.</li>
-					<li><strong>number</strong> Open text; numeric validation.</li>
-					<li><strong>email</strong> Open text; email validation.</li>
-					<li><strong>url</strong> Open text; URL validation.</li>
-					<li><strong>textarea</strong> Open text; large area.</li>
-					<li><strong>select</strong> Dropdown menu; user chooses one option.</li>
-					<li><strong>radio</strong> Radio buttons; user chooses one option.</li>
-					<li><strong>checkbox</strong> Checkboxes; user chooses multiple options.</li>
-					<li><strong>noInput</strong> No user input; just displays <strong>text</strong> (question text/HTML). Useful for "thank you" elements, providing mid-survey instructions, showing creatives, and so forth.</li>
-				</ul> 
-			</li>
-			<li><strong>required</strong> Boolean. Optional. Default = false. If true, prevents submission when the user has not filled in an answer.</li>
-			<li><strong>options</strong> Array of objects. Required for question types with options (select, radio, checkbox). Each element of the array is a possible option for the user to choose from. Option objects consist of:
-				<ul>
-					<li><strong>label</strong> Text. HTML is acceptable, except for SELECT questions. The option text to be shown to the user.
-					<li><strong>value</strong> Text string or number. NO HTML. The value to be saved in the backend (useful for numeric id's, or text slugs that are simpler than the label text).
-				</ul>
-		</ul>
 	</div>
 </body>
 </html>

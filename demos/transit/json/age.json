@@ -1,5 +1,6 @@
 {
 	"question": {
+		"name": "age",
 		"text": "What is your age?",
 		"type": "number",
 		"required": true,

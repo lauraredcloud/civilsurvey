@@ -1,10 +1,10 @@
-<div ng-repeat="questionName in page.questions" ng-controller="questionCtrl">
+<div ng-repeat="questionPath in page.questions" ng-controller="questionCtrl">
 
 	<div class='status error' ng-show="questionError">
 		{{ questionError }}
 	</div>
 
-	<div ng-init="loadQuestion(questionName)">
+	<div ng-init="loadQuestion(questionPath)">
 		<fieldset class="question form-group" ng-if="questionData">
 
 			<div class="questionText" ng-bind-html="questionData.text"></div>
@@ -13,35 +13,35 @@
 			<input 
 				type="{{ questionData.type }}" 
 				ng-if="input_types.indexOf(questionData.type) != -1" 
-				ng-model="surveyValues[questionName]" 
+				ng-model="surveyValues[questionData.name]" 
 				ng-required="questionData.required"
 				min="{{ questionData.min }}"
 				max="{{ questionData.max }}"
-				name="{{ questionName }}" 
-				id="{{ questionName }}" 
-				class="form-control" >
-			</input>
+				name="{{ questionData.name }}" 
+				id="{{ questionData.name }}" 
+				class="form-control" 
+			></input>
 			
 			<!-- Textarea -->
 			<textarea
 				ng-if="questionData.type == 'textarea'" 
-				ng-model="surveyValues[questionName]" 
+				ng-model="surveyValues[questionData.name]" 
 				ng-required="questionData.required"
-				name="{{ questionName }}" 
-				id="{{ questionName }}" 
+				name="{{ questionData.name }}" 
+				id="{{ questionData.name }}" 
 				class="form-control" >			
 			</textarea>
 			
 			<!-- Select -->
 			<select
-				ng-if="questionData.type == 'select' && questionData.options"
-				ng-model="surveyValues[questionName]"
+				ng-if="questionData.type == 'select'"
+				ng-model="surveyValues[questionData.name]"
 				ng-required="questionData.required"
-				name="{{ questionName }}"
-				id="{{ questionName }}"
+				name="{{ questionData.name }}"
+				id="{{ questionData.name }}"
 				class="form-control">
 				<option
-					ng-if="questionData.type == 'select' && questionData.options"
+					ng-if="questionData.options"
 					ng-repeat="option in questionData.options"
 					value="{{ option.value }}">
 						{{ option.label }}
@@ -50,66 +50,143 @@
 			
 			<!-- Radio -->
 			<div
-				ng-if="questionData.type == 'radio' && questionData.options">
+				ng-if="questionData.type == 'radio'">
 				<div ng-repeat="option in questionData.options">
-					<label for="{{ questionName }}_{{ option.value }}"
+					<label for="{{ questionData.name }}_{{ option.value }}"
 						class="radio-inline">
 						<input
 							type="radio"
-							ng-model="surveyValues[questionName]"
+							ng-model="surveyValues[questionData.name]"
 							ng-required="questionData.required"
-							name="{{ questionName }}"
-							id="{{ questionName }}_{{ option.value }}"
+							name="{{ questionData.name }}"
+							id="{{ questionData.name }}_{{ option.value }}"
 							value="{{ option.value }}">
 						</input>
 						<span class='option' ng-bind-html="option.label"></span>
 					</label>
+					
+					<!-- Detail -->
+					<label for="{{ questionData.name }}_detail"
+						class="detail_label"
+						ng-if="option.detail_text">
+						{{ option.detail_text }}
+					</label>
+					<input 
+						type="text" 
+						ng-if="option.detail" 
+						ng-model="surveyValues[questionData.name][detail]" 
+						ng-required="option.detail_required && surveyValues[questionData.name] == option.value"
+						name="{{ questionData.name }}[detail]" 
+						id="{{ questionData.name }}_detail"
+					>
+					</input>
+					<!-- End Detail -->
+					
 				</div>
 			</div>
 			
 			<!-- Checkbox -->
 			<div
-				ng-if="questionData.type == 'checkbox' && questionData.options">
+				ng-if="questionData.type == 'checkbox'">
 				<div ng-repeat="option in questionData.options">
-					<label for="{{ questionName }}_{{ option.value }}"
+					<label for="{{ questionData.name }}_{{ option.value }}"
 						class="checkbox-inline">
 						<input
 							type="checkbox"
-							ng-model="surveyValues[questionName][option.value]"
-							ng-required="questionData.required"
-							name="{{ questionName }}[]"
-							id="{{ questionName }}_{{ option.value }}">
-						</input>
+							name="{{ questionData.name }}"
+							id="{{ questionData.name }}_{{ option.value }}"
+							value="{{ option.value }}"
+							ng-model="surveyValues[questionData.name][option.value]"
+							ng-change="updateNumchecks(questionData.name, surveyForm)"
+						></input>
 						<span class='option' ng-bind-html="option.label"></span>
 					</label>
-				</div>
-			</div>			
-						
+					
+					<!-- Detail -->
+					<div 
+						class="detail"
+						ng-if="option.detail">
+						<label for="{{ questionData.name }}_detail"
+							class="detail_label"
+							ng-if="option.detail_label"
+							ng-bind-html="option.detail_label">
+						</label>
+						<input 
+							type="text" 
+							name="{{ questionData.name }}[detail]" 
+							id="{{ questionData.name }}_detail"
+							ng-model="surveyValues[questionData.name][detail]" 
+							ng-required="option.detail_required && surveyValues[questionData.name][option.value]"
+						></input>
+					</div>
+					<!-- End Detail -->
+				</div> <!-- End Options -->
+				
+				<!-- Number of checks holder -->
+				<input 
+					type="number" 
+					name="{{ questionData.name }}[numChecks]" 
+					id="{{ questionData.name }}_numChecks"
+					min="{{ questionData.min }}"
+					max="{{ questionData.max }}"
+					ng-model="surveyValues[questionData.name].numChecks"
+					ng-required="questionData.required"
+					ng-hide="true"
+				></input>
+
+			</div>
+			
 			<!-- Baked-in Validation -->
 			<span class="help-block error" 
-				ng-show="submittedPage && surveyForm[questionName].$error.required">
-				Required.
+				ng-show="submittedPage && surveyForm[questionData.name].$error.required">
+				This question is required.
 			</span>
+						
 			<span class="help-block error" 
-				ng-show="submittedPage && surveyForm[questionName].$error.number">
+				ng-show="submittedPage && surveyForm[questionData.name+'[detail]'].$error.required">
+				Detail required.
+			</span>
+			
+			<span class="help-block error" 
+				ng-show="submittedPage && surveyForm[questionData.name+'[numChecks]'].$error.required">
+				This question is required.
+			</span>
+			
+			<span class="help-block error" 
+				ng-show="submittedPage && surveyForm[questionData.name].$error.number">
 				Invalid number.
 			</span>
+			
 			<span class="help-block error" 
-				ng-show="submittedPage && surveyForm[questionName].$error.min">
+				ng-show="submittedPage && surveyForm[questionData.name].$error.min">
 				The minimum value is {{ questionData.min }}.
 			</span>
+			
 			<span class="help-block error" 
-				ng-show="submittedPage && surveyForm[questionName].$error.max">
+				ng-show="submittedPage && surveyForm[questionData.name].$error.max">
 				The maximum value is {{ questionData.max }}.
 			</span>
+			
 			<span class="help-block error" 
-				ng-show="submittedPage && surveyForm[questionName].$error.email">
+				ng-show="submittedPage && surveyForm[questionData.name+'[numChecks]'].$error.min">
+				At least {{ questionData.min }} boxes must be checked.
+			</span>
+			
+			<span class="help-block error" 
+				ng-show="submittedPage && surveyForm[questionData.name+'[numChecks]'].$error.max">
+				At most {{ questionData.max }} boxes may be checked.
+			</span>
+			
+			<span class="help-block error" 
+				ng-show="submittedPage && surveyForm[questionData.name].$error.email">
 				Invalid email.
 			</span>
+			
 			<span class="help-block error" 
-				ng-show="submittedPage && surveyForm[questionName].$error.url">
+				ng-show="submittedPage && surveyForm[questionData.name].$error.url">
 				Invalid URL.
 			</span>
+			
 
 		</fieldset>
 	</div>

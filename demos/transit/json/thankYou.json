@@ -1,5 +1,6 @@
 {
 	"question": {
+		"name": "thankYou",
 		"text": "Thanks for taking the survey! Here's a fun link: <a href='http://www.huffingtonpost.com/2013/09/16/kittens-play-jenga_n_3935685.html'>Kittens playing Jenga!</a>",
 		"type": "noInput"
 	}

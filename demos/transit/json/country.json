@@ -1,5 +1,6 @@
 {
 	"question": {
+		"name": "country",
 		"text": "In what country do you reside?",
 		"type": "select",
 		"options": [

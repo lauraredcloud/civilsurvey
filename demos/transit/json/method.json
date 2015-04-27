@@ -1,7 +1,10 @@
 {
 	"question": {
+		"name": "method",
 		"text": "Which of the following methods of transportation do you use?",
 		"type": "checkbox",
+		"required": true,
+		"shuffle": true,
 		"options": [
 			{
 				"label": "Car/Truck (Personal Vehicle)",
@@ -25,7 +28,11 @@
 			},
 			{
 				"label": "Other",
-				"value": "other"
+				"value": "other",
+				"detail": true,
+				"detail_required": true,
+				"detail_label": "Please specify",
+				"shuffle_exempt": true
 			}
 		]
 	}

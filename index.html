@@ -5,14 +5,8 @@
 		<title>CivilSurvey</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/css/style.css" />
-		<link rel="stylesheet" type="text/css" href="css/style.css" />
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular-sanitize.min.js"></script>
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular-animate.min.js"></script>
-		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="app.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/civilsurvey.css" />
 	</head>
 
 	<body ng-app="civilSurvey">	
@@ -21,14 +15,28 @@
 		<a class=lynx href="http://www.laurahughes.com/">main</a>
 	</div>
 	
-		<h1>CivilSurvey</h1>
-		<div id="bodytext">
-			CivilSurvey is an open source, lightweight, client-side survey engine created by Laura Hughes. It's powered by Angular.js and driven by a JSON API. 
-			
-			<h3>Demos</h3>
-			
-			<p><a href="demos/transit/">Transit Survey</a>
-		</div>
+	<div id="name">CivilSurvey</div>
+	<div id="bodytext">
+	
+		<p>CivilSurvey is an open source, lightweight survey engine built with Angular.js, driven by a JSON API.</p>
+		
+		<p><strong>Features</strong>
+		<ul>
+			<li>All major question types: text line, textarea, select dropdown, radio buttons, checkboxes
+			<li>Built-in validation for numerous situations
+			<li>Detail box ("Other/Please Specify") 
+			<li>Randomize order of options (allows exemptions, for example "All/None of the Above")
+		</ul>
+		
+		<p><strong>Demos</strong>
+		<ul>
+			<li><a href="demos/transit/">Transit Survey</a>
+		</ul>
+	
+		<p><a href="documentation.html">View the documentation.</a></p>
+
+	</div>
+	
 	</body>
 	
 </html>

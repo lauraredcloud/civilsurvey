@@ -29,13 +29,23 @@
 	left: -100%;
 }
 
-/* Visual elements */
+/* Visual styling */
 .instructions {
 	margin-bottom: 1em;
 }
 .footer {
 	font-size: 0.8em;
 	color: #666;
+}
+div.detail {
+	margin-left: 1em;
+}
+label.detail_label {
+	font-weight: normal;
+	color: #666;
+}
+.page {
+	padding-right: 1em;
 }
 
 /* Status Error or Success Message */
